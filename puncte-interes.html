@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificare Călătorii - Puncte de Interes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Meniu de navigare comun -->
+    <nav>
+        <a href="index.html" class="logo">✈️ WanderPlan</a>
+        <ul>
+            <li><a href="index.html">1. Autentificare & Locație</a></li>
+            <li><a href="puncte-interes.html" class="active">2. Puncte de Interes</a></li>
+            <li><a href="buget.html">3. Calcul Buget</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Puncte de Interes & Opțiuni</h1>
+        <p class="subtitle">Selectează obiectivele turistice, restaurantele și modurile de transport dorite pentru călătoria ta.</p>
+
+        <!-- Obiective Turistice -->
+        <h2 class="category-title">🏛️ Obiective Turistice</h2>
+        <div class="grid-cards" id="category-obiective"></div>
+
+        <!-- Restaurante / Culinar -->
+        <h2 class="category-title">🍽️ Restaurante și Culinar</h2>
+        <div class="grid-cards" id="category-restaurante"></div>
+
+        <!-- Transport -->
+        <h2 class="category-title">🚗 Transport</h2>
+        <div class="grid-cards" id="category-transport"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 WanderPlan Team. Toate drepturile rezervate.</p>
+    </footer>
+
+    <script>
+        // Baza de date cu opțiuni structurate pe categorii, imagini Unsplash de înaltă calitate și preț în RON
+        const itemsData = [
+            { id: 'obs1', category: 'obiective', title: 'Tur Ghidat Centrul Istoric', desc: 'Tur pietonal de 3 ore cu ghid specializat.', price: 150, image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&auto=format&fit=crop&q=80' },
+            { id: 'obs2', category: 'obiective', title: 'Vizită Muzeu de Artă & Istorie', desc: 'Acces rapid (Skip-the-line) la galeriile principale.', price: 95, image: 'https://images.unsplash.com/photo-1565060169194-1560f785b86a?w=600&auto=format&fit=crop&q=80' },
+            { id: 'obs3', category: 'obiective', title: 'Excursie Panoramică cu Telecabina', desc: 'Priveliști spectaculoase deasupra orașului.', price: 120, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80' },
+            
+            { id: 'res1', category: 'restaurante', title: 'Cină Traditională la Local', desc: 'Meniu complet cu 3 feluri de mâncare specifică.', price: 180, image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&auto=format&fit=crop&q=80' },
+            { id: 'res2', category: 'restaurante', title: 'Experiență Degustare Vinuri', desc: 'Degustare ghidată a 5 sortimente locale renumite.', price: 220, image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&auto=format&fit=crop&q=80' },
+            { id: 'res3', category: 'restaurante', title: 'Mic Dejun Gourmet & Cafea de Specialitate', desc: 'Pachet zilnic pentru energie maximă.', price: 65, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&auto=format&fit=crop&q=80' },
+
+            { id: 'tra1', category: 'transport', title: 'Pass Nelimitat Transport Public (7 zile)', desc: 'Acces liber metrou, autobuz și tramvai.', price: 140, image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&auto=format&fit=crop&q=80' },
+            { id: 'tra2', category: 'transport', title: 'Transfer Privat Aeroport - Hotel', desc: 'Mașină dedicată la sosire și plecare.', price: 250, image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&auto=format&fit=crop&q=80' },
+            { id: 'tra3', category: 'transport', title: 'Închiriere Bicicletă (3 Zile)', desc: 'Ideal pentru explorarea ecologică a atracțiilor.', price: 110, image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&auto=format&fit=crop&q=80' }
+        ];
+
+        // Preluare selecții salvate anterior din localStorage
+        let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+
+        function renderItems() {
+            const categories = {
+                obiective: document.getElementById('category-obiective'),
+                restaurante: document.getElementById('category-restaurante'),
+                transport: document.getElementById('category-transport')
+            };
+
+            itemsData.forEach(item => {
+                const isChecked = selectedItems.includes(item.id);
+                const cardHTML = `
+                    <div class="poi-card">
+                        <img src="${item.image}" alt="${item.title}" class="poi-img">
+                        <div class="poi-body">
+                            <div>
+                                <h3 class="poi-title">${item.title}</h3>
+                                <p class="poi-desc">${item.desc}</p>
+                            </div>
+                            <div class="poi-footer">
+                                <span class="poi-price">${item.price} RON</span>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
+                                    <input type="checkbox" value="${item.id}" ${isChecked ? 'checked' : ''} onchange="toggleItem('${item.id}')" style="width: 18px; height: 18px; accent-color: var(--primary-color);">
+                                    Selectează
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                if (categories[item.category]) {
+                    categories[item.category].innerHTML += cardHTML;
+                }
+            });
+        }
+
+        function toggleItem(id) {
+            const index = selectedItems.indexOf(id);
+            if (index > -1) {
+                selectedItems.splice(index, 1);
+            } else {
+                selectedItems.push(id);
+            }
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+        }
+
+        renderItems();
+    </script>
+</body>
+</html>
