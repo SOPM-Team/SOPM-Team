@@ -3,149 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planificare Călătorii - Calcul Buget</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Calculare Buget (Sima)</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <div class="logo">✈️ Travel Planner</div>
+        <nav>
+            <a href="index.html">Acasă & Țări</a>
+            <a href="puncte-interes.html">Puncte de Interes</a>
+            <a href="buget.html" class="active">Calcul Buget</a>
+        </nav>
+    </header>
 
-    <!-- Meniu de navigare comun -->
-    <nav>
-        <a href="index.html" class="logo">✈️ WanderPlan</a>
-        <ul>
-            <li><a href="index.html">1. Autentificare & Locație</a></li>
-            <li><a href="puncte-interes.html">2. Puncte de Interes</a></li>
-            <li><a href="buget.html" class="active">3. Calcul Buget</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <h1>Calcul Buget & Statistici Călătorie</h1>
-        <p class="subtitle">Vizualizează în timp real costurile estimate pe categorii pe baza selecțiilor tale.</p>
-
-        <!-- Rezumat Financiar -->
-        <div class="budget-summary">
-            <div class="stat-card">
-                <h3>Destinație Aleasă</h3>
-                <div class="value" id="statDestinatie" style="font-size: 1.4rem;">Neselectată</div>
-            </div>
-            <div class="stat-card">
-                <h3>Opțiuni Selectate</h3>
-                <div class="value" id="statCount">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>Buget Total Estimat</h3>
-                <div class="value" id="statTotal">0 RON</div>
-            </div>
-        </div>
-
-        <!-- Detaliere și Bare de Progres pe Categorii -->
-        <div class="card">
-            <h2 style="margin-bottom: 1.5rem; font-size: 1.3rem;">Repartizarea Bugetului pe Categorii</h2>
+    <main class="container">
+        <section class="card">
+            <h2>Calculare Buget Estimativ</h2>
             
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>🏛️ Obiective Turistice</span>
-                    <span id="valObiective">0 RON</span>
+            <form id="budget-form">
+                <div class="form-group">
+                    <label for="num-days">Număr de zile de vacanță:</label>
+                    <input type="number" id="num-days" min="1" value="5" required>
                 </div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="barObiective"></div>
-                </div>
-            </div>
 
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>🍽️ Restaurante și Culinar</span>
-                    <span id="valRestaurante">0 RON</span>
+                <div class="form-group">
+                    <label for="accommodation">Tip Cazare (pe noapte):</label>
+                    <select id="accommodation">
+                        <option value="30">Hostel / Buget redus (30 EUR/noapte)</option>
+                        <option value="80" selected>Hotel 3 stele (80 EUR/noapte)</option>
+                        <option value="180">Hotel 5 stele / Resort (180 EUR/noapte)</option>
+                    </select>
                 </div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="barRestaurante"></div>
-                </div>
-            </div>
 
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>🚗 Transport</span>
-                    <span id="valTransport">0 RON</span>
+                <div class="form-group">
+                    <label for="flight-cost">Cost Bilet Avion / Transport principal (EUR):</label>
+                    <input type="number" id="flight-cost" value="150" min="0">
                 </div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="barTransport"></div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Listă detaliată a elementelor alese -->
-        <div class="card">
-            <h2 style="margin-bottom: 1rem; font-size: 1.3rem;">Sumarul Elementelor Alese</h2>
-            <ul id="selectedList" style="list-style: none; padding: 0;">
-                <li style="color: var(--text-muted);">Nicio opțiune selectată momentan. Mergi la pagina 2 pentru a adăuga puncte de interes.</li>
+                <button type="button" id="calc-budget-btn" class="btn">Calculează Buget Total</button>
+            </form>
+        </section>
+
+        <!-- Rezultat Calcul Buget -->
+        <section class="card">
+            <h3>Sumar Buget Vacanță</h3>
+            <div id="selected-destination"><strong>Destinație aleasă:</strong> <span id="dest-name">Nicio țară selectată</span></div>
+            <p><strong>Puncte de interes & Opțiuni selectate:</strong></p>
+            <ul id="selected-poi-list">
+                <li>Nu a fost selectat niciun punct de interes.</li>
             </ul>
-        </div>
-    </div>
+
+            <div class="total-box">
+                Total Estimat: <span id="total-amount">0</span> EUR
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <p>&copy; 2026 WanderPlan Team. Toate drepturile rezervate.</p>
+        <p>&copy; 2026 Travel Planner - Proiect realizat de George, Gherghe și Sima</p>
     </footer>
 
-    <script>
-        // Sursa datelor (aceeași listă ca în pagina 2 pentru consistență)
-        const itemsData = [
-            { id: 'obs1', category: 'obiective', title: 'Tur Ghidat Centrul Istoric', price: 150 },
-            { id: 'obs2', category: 'obiective', title: 'Vizită Muzeu de Artă & Istorie', price: 95 },
-            { id: 'obs3', category: 'obiective', title: 'Excursie Panoramică cu Telecabina', price: 120 },
-            { id: 'res1', category: 'restaurante', title: 'Cină Traditională la Local', price: 180 },
-            { id: 'res2', category: 'restaurante', title: 'Experiență Degustare Vinuri', price: 220 },
-            { id: 'res3', category: 'restaurante', title: 'Mic Dejun Gourmet & Cafea de Specialitate', price: 65 },
-            { id: 'tra1', category: 'transport', title: 'Pass Nelimitat Transport Public (7 zile)', price: 140 },
-            { id: 'tra2', category: 'transport', title: 'Transfer Privat Aeroport - Hotel', price: 250 },
-            { id: 'tra3', category: 'transport', title: 'Închiriere Bicicletă (3 Zile)', price: 110 }
-        ];
-
-        function calculateBudget() {
-            const selectedCountry = localStorage.getItem('selectedCountry');
-            if (selectedCountry) {
-                document.getElementById('statDestinatie').textContent = selectedCountry;
-            }
-
-            const selectedIds = JSON.parse(localStorage.getItem('selectedItems')) || [];
-            document.getElementById('statCount').textContent = selectedIds.length;
-
-            let totals = { obiective: 0, restaurante: 0, transport: 0 };
-            let grandTotal = 0;
-            let listHTML = '';
-
-            const selectedObjects = itemsData.filter(item => selectedIds.includes(item.id));
-
-            if (selectedObjects.length === 0) {
-                listHTML = '<li style="color: var(--text-muted); padding: 0.5rem 0;">Nicio opțiune selectată momentan.</li>';
-            } else {
-                selectedObjects.forEach(item => {
-                    totals[item.category] += item.price;
-                    grandTotal += item.price;
-                    listHTML += `
-                        <li style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
-                            <span>${item.title}</span>
-                            <strong>${item.price} RON</strong>
-                        </li>
-                    `;
-                });
-            }
-
-            document.getElementById('selectedList').innerHTML = listHTML;
-            document.getElementById('statTotal').textContent = grandTotal + ' RON';
-
-            // Actualizare sume pe categorii
-            document.getElementById('valObiective').textContent = totals.obiective + ' RON';
-            document.getElementById('valRestaurante').textContent = totals.restaurante + ' RON';
-            document.getElementById('valTransport').textContent = totals.transport + ' RON';
-
-            // Actualizare bare de progres (raportate la un maxim estimat de 1000 RON sau total)
-            const maxScale = grandTotal > 0 ? grandTotal : 1;
-            document.getElementById('barObiective').style.width = Math.min(100, (totals.obiective / maxScale) * 100) + '%';
-            document.getElementById('barRestaurante').style.width = Math.min(100, (totals.restaurante / maxScale) * 100) + '%';
-            document.getElementById('barTransport').style.width = Math.min(100, (totals.transport / maxScale) * 100) + '%';
-        }
-
-        calculateBudget();
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
