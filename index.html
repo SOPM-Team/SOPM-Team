@@ -3,135 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planificare Călătorii - Autentificare și Locație</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Travel Planner - Index (George)</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <div class="logo">✈️ Travel Planner</div>
+        <nav>
+            <a href="index.html" class="active">Acasă & Țări</a>
+            <a href="puncte-interes.html">Puncte de Interes</a>
+            <a href="buget.html">Calcul Buget</a>
+        </nav>
+    </header>
 
-    <!-- Meniu de navigare comun -->
-    <nav>
-        <a href="index.html" class="logo">✈️ WanderPlan</a>
-        <ul>
-            <li><a href="index.html" class="active">1. Autentificare & Locație</a></li>
-            <li><a href="puncte-interes.html">2. Puncte de Interes</a></li>
-            <li><a href="buget.html">3. Calcul Buget</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <h1>Planificator Inteligent de Călătorii</h1>
-        <p class="subtitle">Creează-ți contul și selectează destinația visurilor tale dintr-o selecție globală.</p>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-            <!-- Secțiunea Autentificare -->
-            <div class="card">
-                <h2 style="margin-bottom: 1.25rem; font-size: 1.3rem;">Creare Cont / Înregistrare</h2>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="name">Nume complet</label>
-                        <input type="text" id="name" required placeholder="ex: Ion Popescu">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Adresă Email</label>
-                        <input type="email" id="email" required placeholder="ex: ion.popescu@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Parolă</label>
-                        <input type="password" id="password" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn">Înregistrează-te</button>
-                    <div id="successAlert" class="alert alert-success">
-                        Contul a fost creat cu succes! Te poți bucura de planificare.
-                    </div>
-                </form>
-            </div>
-
-            <!-- Secțiunea Alegere Locație (API 10 țări) -->
-            <div class="card">
-                <h2 style="margin-bottom: 1.25rem; font-size: 1.3rem;">Alege Destinația (10 Țări)</h2>
+    <main class="container">
+        <!-- Secțiunea Creare Cont / Autentificare -->
+        <section class="card" id="auth-section">
+            <h2>Creare Cont / Autentificare</h2>
+            <form id="auth-form">
                 <div class="form-group">
-                    <label for="countrySelect">Selectează Țara</label>
-                    <select id="countrySelect">
-                        <option value="">-- Alege o destinație --</option>
-                    </select>
+                    <label for="username">Nume utilizator:</label>
+                    <input type="text" id="username" required placeholder="Introduceți numele">
                 </div>
-
-                <div id="countryDetails" style="margin-top: 1.5rem; background: var(--bg-color); padding: 1rem; border-radius: 8px; display: none;">
-                    <h3 id="countryName" style="color: var(--primary-color); margin-bottom: 0.5rem;"></h3>
-                    <p><strong>Capitală:</strong> <span id="countryCapital"></span></p>
-                    <p><strong>Monedă:</strong> <span id="countryCurrency"></span></p>
-                    <p><strong>Populație estimată:</strong> <span id="countryPopulation"></span></p>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required placeholder="exemplu@email.com">
                 </div>
+                <button type="submit" class="btn">Creează Cont</button>
+            </form>
+            <div id="user-welcome" class="hidden">
+                <h3>Bine ai venit, <span id="display-user"></span>!</h3>
+                <button id="logout-btn" class="btn btn-secondary">Deconectare</button>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <!-- Secțiunea API 10 Țări -->
+        <section class="card">
+            <h2>Alegere Locație (Top 10 Destinații API)</h2>
+            <p>Selectează o țară din listă pentru a-ți planifica călătoria:</p>
+            <div id="loading">Se încarcă datele din API...</div>
+            <div id="countries-grid" class="grid-container"></div>
+        </section>
+    </main>
 
     <footer>
-        <p>&copy; 2026 WanderPlan Team. Toate drepturile rezervate.</p>
+        <p>&copy; 2026 Travel Planner - Proiect realizat de George, Gherghe și Sima</p>
     </footer>
 
-    <script>
-        // Date pre luate dinamic sau simulate pentru cele 10 țări cerute
-        const countriesData = {
-            "Romania": { capital: "București", currency: "RON (Leu)", population: "19 mil." },
-            "Italia": { capital: "Roma", currency: "EUR (Euro)", population: "59 mil." },
-            "Franta": { capital: "Paris", currency: "EUR (Euro)", population: "68 mil." },
-            "Spania": { capital: "Madrid", currency: "EUR (Euro)", population: "47 mil." },
-            "Germania": { capital: "Berlin", currency: "EUR (Euro)", population: "83 mil." },
-            "Grecia": { capital: "Atena", currency: "EUR (Euro)", population: "10.4 mil." },
-            "Japonia": { capital: "Tokio", currency: "JPY (Yen)", population: "125 mil." },
-            "Marea Britanie": { capital: "Londra", currency: "GBP (Liră sterlină)", population: "67 mil." },
-            "Olanda": { capital: "Amsterdam", currency: "EUR (Euro)", population: "17.5 mil." },
-            "Austria": { capital: "Viena", currency: "EUR (Euro)", population: "9 mil." }
-        };
-
-        const select = document.getElementById('countrySelect');
-        const detailsBox = document.getElementById('countryDetails');
-        
-        // Populare meniu derulant
-        Object.keys(countriesData).forEach(country => {
-            const option = document.createElement('option');
-            option.value = country;
-            option.textContent = country;
-            select.appendChild(option);
-        });
-
-        // Preluare stocată anterior dacă există
-        const savedCountry = localStorage.getItem('selectedCountry');
-        if (savedCountry && countriesData[savedCountry]) {
-            select.value = savedCountry;
-            showDetails(savedCountry);
-        }
-
-        select.addEventListener('change', (e) => {
-            const val = e.target.value;
-            if (val) {
-                localStorage.setItem('selectedCountry', val);
-                showDetails(val);
-            } else {
-                detailsBox.style.display = 'none';
-                localStorage.removeItem('selectedCountry');
-            }
-        });
-
-        function showDetails(countryKey) {
-            const data = countriesData[countryKey];
-            document.getElementById('countryName').textContent = countryKey;
-            document.getElementById('countryCapital').textContent = data.capital;
-            document.getElementById('countryCurrency').textContent = data.currency;
-            document.getElementById('countryPopulation').textContent = data.population;
-            detailsBox.style.display = 'block';
-        }
-
-        // Gestionare formular înregistrare
-        document.getElementById('registerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            localStorage.setItem('userName', name);
-            const alertBox = document.getElementById('successAlert');
-            alertBox.style.display = 'block';
-            setTimeout(() => { alertBox.style.display = 'none'; }, 4000);
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
