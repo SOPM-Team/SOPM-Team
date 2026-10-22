@@ -51,6 +51,3 @@ https://restcountries.com/v3.1/name/romania
 - Ionut-Marian Sima: Autentificare, alegerea locatiei si structura paginii principale (index.html)
 - Gherghe Radu-Andrei: Puncte de interes, imagini pe carduri si itinerariul pe 7 zile (puncte-interes.html)
 - Mihai George-Marius: Modulul de calculare a bugetului, bare de progres si statistici (buget.html)
-
-## Instructiuni de configurare si rulare
-In aceasta etapa, se cloneaza repository-ul si se testeaza fisierele HTML/CSS locale in browser. Pentru rulare, deschideti fisierul `index.html` intr-un browser web sau folositi o extensie de tip Live Server.
