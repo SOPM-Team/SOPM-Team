@@ -242,7 +242,11 @@ const App = (() => {
     let map = null; const pts = [];
     if (window.L) {
       map = L.map('map', { scrollWheelZoom: false }).setView([48, 12], 4);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 19, attribution: '© OpenStreetMap, © CARTO' }).addTo(map);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_4xf7_2_d632ab49b2e1e510c52bda22', { 
+     subdomains: 'abcd', 
+     maxZoom: 19, 
+     attribution: '© OpenStreetMap, © CARTO' 
+    }).addTo(map);
       WIKI(LM[c.code]).then(w => { if (w?.lat && !pts.length) map.setView([w.lat, w.lon], 5); });
     } else $('#map').innerHTML = '<p class="muted" style="padding:24px">Harta nu s-a putut încărca. Verifică conexiunea la internet.</p>';
     items.filter(i => i.wiki).forEach(async it => {
