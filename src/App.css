@@ -1,0 +1,181 @@
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  width: min(100% - 32px, 680px);
+  margin: 0 auto;
+  padding: 72px 0;
+}
+
+.app__header {
+  margin-bottom: 36px;
+}
+
+.app__eyebrow {
+  margin: 0 0 12px;
+  color: #547a61;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.app__header h1 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  line-height: 1.08;
+}
+
+.app__header > p:last-child {
+  margin: 12px 0 0;
+  color: #62706b;
+}
+
+.task-form {
+  padding: 20px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.task-form > label {
+  display: block;
+  margin-bottom: 9px;
+  font-weight: 700;
+}
+
+.task-form__controls {
+  display: flex;
+  gap: 10px;
+}
+
+.task-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #cbd4ca;
+  border-radius: 5px;
+}
+
+.task-form button {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 5px;
+  background: #315d49;
+  color: #fff;
+  font-weight: 700;
+}
+
+.task-form button:hover {
+  background: #244735;
+}
+
+.task-section {
+  margin-top: 40px;
+}
+
+.task-section__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.task-section__heading h2 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.35rem;
+}
+
+.task-section__heading p {
+  margin: 0;
+  color: #62706b;
+  font-size: 0.9rem;
+}
+
+.task-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 4px;
+  border-bottom: 1px solid #dfe5dc;
+}
+
+.task label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.task input {
+  width: 18px;
+  height: 18px;
+  accent-color: #315d49;
+}
+
+.task--completed span {
+  color: #78827d;
+  text-decoration: line-through;
+}
+
+.task button {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border: 1px solid #e6c6b8;
+  border-radius: 5px;
+  background: transparent;
+  color: #9a462c;
+}
+
+.task button:hover {
+  background: #fff1eb;
+}
+
+.empty-message {
+  padding: 20px;
+  border-left: 3px solid #d56a43;
+  background: #fff;
+  color: #62706b;
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding-top: 48px;
+  }
+
+  .task-form__controls {
+    flex-direction: column;
+  }
+
+  .task-form button {
+    min-height: 44px;
+  }
+}
+
+.task-form input:focus-visible {
+  border-color: #315d49;
+}
+
+.task-form button:focus-visible,
+.task button:focus-visible {
+  outline: 3px solid #d56a43;
+  outline-offset: 3px;
+}
+
+.task button {
+  transition: background-color 0.2s ease;
+}
+
+.task-form button {
+  transition: background-color 0.2s ease;
+}
