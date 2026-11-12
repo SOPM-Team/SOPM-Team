@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
@@ -71,5 +70,4 @@ https://restcountries.com/v3.1/name/romania
 - Mihai George-Marius: Modulul de calculare a bugetului, bare de progres si statistici (buget.html)
 
 ## Instructiuni de configurare si rulare
-In aceasta etapa, se cloneaza repository-ul si se testeaza fisierele HTML/CSS locale in browser. Pentru rulare, deschideti fisierul `index.html` intr-un browser web sau folositi o extensie de tip Live Server.
->>>>>>> d622d129156e21d858d0d2196cdc082ee5f4bd6c
+In aceasta etapa, se cloneaza repository-ul si se testeaza fisierele HTML/CSS locale in browser. Pentru rulare, deschideti fisierul `index.html` intr-un browser web sau folositi o extensie de tip Live Server
