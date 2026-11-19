@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
@@ -22,9 +21,10 @@ If you are developing a production application, we recommend using TypeScript wi
 - Ionut-Marian Sima
 - Gherghe Radu-Andrei
 - Mihai George-Marius
+- Aldea Radu
 
 ## Descriere
-WanderPlan este o aplicatie web interactiva de planificare a calatoriilor care permite utilizatorilor sa isi creeze conturi, sa aleaga destinatii dintr-o lista internationala, sa vizualizeze itinerarii detaliate pe 7 zile cu puncte de interes, imagini de inalta calitate si sa calculeze un buget estimat in timp real pe categorii.
+WanderPlan este o aplicație web interactivă de planificare a călătoriilor care permite utilizatorilor să își creeze conturi, să aleagă destinații dintr-o listă internațională, să vizualizeze itinerarii detaliate pe 7 zile cu puncte de interes, imagini de înaltă calitate și să calculeze un buget estimat în timp real pe categorii.
 
 ## Template selectat
 Template 4 - Aplicatie bazata pe locatie / Template de cautare si planificare
@@ -72,4 +72,3 @@ https://restcountries.com/v3.1/name/romania
 
 ## Instructiuni de configurare si rulare
 In aceasta etapa, se cloneaza repository-ul si se testeaza fisierele HTML/CSS locale in browser. Pentru rulare, deschideti fisierul `index.html` intr-un browser web sau folositi o extensie de tip Live Server.
->>>>>>> d622d129156e21d858d0d2196cdc082ee5f4bd6c
